@@ -108,6 +108,8 @@ Limine supports both in-tree and out-of-tree builds. Simply run the `configure`
 script from the directory you wish to execute the build in. The following `make`
 commands are supposed to be run inside the build directory.
 
+**If not sure, run `./configure --enable-bios-cd --enable-uefi-cd --enable-uefi-x86-64` to enable x64 loading support.**
+
 ### Building Limine
 
 To build Limine, run:
@@ -202,6 +204,26 @@ xorriso -as mkisofs -b <relative path of limine-bios-cd.bin> \
         -efi-boot-part --efi-boot-image --protective-msdos-label \
         <root directory> -o image.iso
 ```
+
+Recommended is to create the iso as following:
+
+```bash
+cd <path to limine>/limine/bin
+mkdir -p iso/EFI/BOOT
+cp BOOTX64.EFI iso/EFI/BOOT
+cp <path to limine.cfg> iso
+cp <path to your kernel> iso/<kernel name>
+mkdir iso/bin
+cp limine-uefi-cd.bin iso/bin
+cp limine-bios-cd.bin iso/bin
+xorriso -as mkisofs -b bin/limine-bios-cd.bin \
+        -no-emul-boot -boot-load-size 4 -boot-info-table \
+        --efi-boot bin/limine-uefi-cd.bin \
+        -efi-boot-part --efi-boot-image --protective-msdos-label \
+        iso -o image.iso
+```
+
+After that you can run the bootable iso on bare metal or in Virtual Box.
 
 *Note: `xorriso` is required.*
 
