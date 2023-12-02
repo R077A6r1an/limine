@@ -213,12 +213,12 @@ mkdir -p iso/EFI/BOOT
 cp BOOTX64.EFI iso/EFI/BOOT
 cp <path to limine.cfg> iso
 cp <path to your kernel> iso/<kernel name>
-mkdir iso/bin
-cp limine-uefi-cd.bin iso/bin
-cp limine-bios-cd.bin iso/bin
-xorriso -as mkisofs -b bin/limine-bios-cd.bin \
+cp limine-uefi-cd.bin iso
+cp limine-bios-cd.bin iso
+cp limine-bios.sys iso
+xorriso -as mkisofs -b limine-bios-cd.bin \
         -no-emul-boot -boot-load-size 4 -boot-info-table \
-        --efi-boot bin/limine-uefi-cd.bin \
+        --efi-boot limine-uefi-cd.bin \
         -efi-boot-part --efi-boot-image --protective-msdos-label \
         iso -o image.iso
 ```
