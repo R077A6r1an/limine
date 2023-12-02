@@ -108,7 +108,7 @@ Limine supports both in-tree and out-of-tree builds. Simply run the `configure`
 script from the directory you wish to execute the build in. The following `make`
 commands are supposed to be run inside the build directory.
 
-**If not sure, run `./configure --enable-bios-cd --enable-uefi-cd --enable-uefi-x86-64` to enable x64 loading support.**
+**If not sure, run `./configure --enable-bios-cd --enable-uefi-cd --enable-uefi-x86-64 --enable-bios` to enable x64 loading support.**
 
 ### Building Limine
 
@@ -223,7 +223,15 @@ xorriso -as mkisofs -b limine-bios-cd.bin \
         iso -o image.iso
 ```
 
-After that you can run the bootable iso on bare metal or in Virtual Box.
+After that you can run the bootable iso on bare metal, Virtual Box or qemu.
+
+To run in qemu, run:
+
+```bash
+qemu-system-x86_64 -cdrom image.iso
+```
+
+Or to run in virtual box, just select all things like you all times do by setting up a new VM. Just choose by selection of the iso-image the new created iso, select by guest type `Other/Unknown` and version `Other/Unknown 64-bit`, choose a bit memory and just for test think you must not create a hard disk, and EFI is optional by the configuration of above. And then you'll be able to run it.
 
 *Note: `xorriso` is required.*
 
