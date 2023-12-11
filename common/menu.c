@@ -98,21 +98,10 @@ static const char *VALID_KEYS[] = {
     "KASLR",
     "DRIVE",
     "PARTITION",
+    "MBR_ID",
+    "GPT_GUID",
+    "GPT_UUID",
     "IMAGE_PATH",
-    "TERM_CONFIG_OVERRIDE",
-    "TERM_PALETTE",
-    "TERM_PALETTE_BRIGHT",
-    "TERM_BACKGROUND",
-    "TERM_FOREGROUND",
-    "TERM_WALLPAPER",
-    "TERM_MARGIN",
-    "TERM_MARGIN_GRADIENT",
-    "TERM_WALLPAPER_STYLE",
-    "TERM_BACKDROP",
-    "TERM_FONT_SIZE",
-    "TERM_FONT",
-    "TERM_FONT_SPACING",
-    "TERM_FONT_SCALE",
     NULL
 };
 
@@ -1028,12 +1017,7 @@ noreturn void boot(char *config) {
         panic(true, "Boot protocol not specified for this entry");
     }
 
-    if (!strcmp(proto, "stivale1") || !strcmp(proto, "stivale") || !strcmp(proto, "stivale2")) {
-        quiet = false;
-        print("The stivale and stivale2 protocols are no longer supported as of Limine 4.x\n");
-        print("Please notify kernel maintainers to move to the Limine boot protocol or\n");
-        print("roll back to Limine 3.x.\n\n");
-    } else if (!strcmp(proto, "limine")) {
+    if (!strcmp(proto, "limine")) {
         limine_load(config, cmdline);
     } else if (!strcmp(proto, "linux")) {
 #if defined (__x86_64__) || defined (__i386__)
